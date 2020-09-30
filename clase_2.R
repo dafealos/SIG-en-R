@@ -57,7 +57,7 @@ Bioclim <- Bioclim[[c(1, 7, 12, 15)]]
 plot(Bioclim)
 #extraemos los datos de los puntos
 
-Clima <- extract(Bioclim, B_impatiens) %>% as.data.frame()
+Clima <- raster::extract(Bioclim, B_impatiens) %>% as.data.frame()
 
 # las unimos
 
@@ -94,7 +94,7 @@ ggplot() +
 
 ### Para predecir al futuro
 
-Futuro <- getData("CMIP5", var = "bio", res = 2.5, rcp = 85,model = "HD", year = 70) %>% 
+Futuro <- getData("CMIP5", var = "bio", res = 5, rcp = 85,model = "HD", year = 70) %>% 
         crop(B_impatiens)
 Futuro <- Futuro[[c(1, 7, 12, 15)]]
 
