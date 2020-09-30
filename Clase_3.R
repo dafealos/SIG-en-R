@@ -5,6 +5,7 @@ library(raster)
 library(sf)
 library(tidyverse)
 library(mapedit)
+library(mapview)
 
 Nothofagus <- read_csv("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Presentaciones_Espacial/Nothofagus.csv")
 
@@ -144,7 +145,7 @@ Heat_Map <- Heat_Map %>% addLayersControl(baseGroups = Spp_Names,
 ### Trabajando con poligonos
 
 #download.file("https://raw.githubusercontent.com/derek-corcoran-barrios/derek-corcoran-barrios.github.io/master/Presentaciones_Espacial/Chile.zip", 
-              destfile = "Chile.zip")
+              #destfile = "Chile.zip")
 
 #unzip("Chile.zip")
 
@@ -188,3 +189,13 @@ departamentos <- leaflet() %>%
         addMeasurePathToolbar(options = measurePathOptions(imperial = F, 
                                                            minPixelDistance = 100, showDistances = T)) %>%
         addStyleEditor()
+
+
+### Mapedit
+
+
+colombia_SF <- colombia_spat %>% st_as_sf()
+
+
+nuevos_dep <- mapview(colombia_SF) %>%
+        editMap("colombia_SF")

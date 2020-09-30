@@ -1,0 +1,46 @@
+---
+title: "mapa_interactivo"
+author: "Daniel Alvarado"
+date: "30/9/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, error = FALSE)
+```
+
+```{r}
+library(leaflet)
+library(leaflet.extras)
+library(rworldxtra)
+library(raster)
+library(sf)
+library(tidyverse)
+library(mapedit)
+```
+
+```{r}
+colombia <- getData("GADM", country = "COL", level = 1)
+
+colombia <- colombia %>% st_as_sf()
+
+colombia <- colombia %>% select(NAME_1, geometry)
+
+colombia_spat <- colombia %>%  as_Spatial()
+
+departamentos <- leaflet() %>% 
+        addTiles() %>% 
+        addPolygons(data = colombia_spat, 
+                    fillColor = topo.colors(16, alpha = NULL), weight = 0.5, 
+                    label = ~NAME_1, group = "Departamentos") %>% 
+        addDrawToolbar(targetGroup = "nueva area", 
+                       editOptions = editToolbarOptions(selectedPathOptions = selectedPathOptions())) %>% 
+        addLayersControl(overlayGroups = c("Departamentos", "nueva area"), 
+                         options = layersControlOptions(collapsed = TRUE)) %>% 
+        addMeasurePathToolbar(options = measurePathOptions(imperial = F, 
+                                                           minPixelDistance = 100, showDistances = T)) %>%
+        addStyleEditor()
+
+departamentos
+```
+
