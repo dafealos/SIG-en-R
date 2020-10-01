@@ -121,13 +121,9 @@ dev.off()
 
 ### Rasters
 
-download.file("https://archive.org/download/priority...", destfile = "Priority.rds")
+download.file("https://archive.org/download/priority_202007/Priority.rds", destfile = "Priority.rds")
 
-Priority = readRDS("Priority.rds")
-
-saveRDS(Priority, "Priority.rds")
-
-Priority <- readGDAL("Priority.tiff")
+Priority <- readRDS("Priority.rds")
 
 ## Agregamos un shapefile
 
